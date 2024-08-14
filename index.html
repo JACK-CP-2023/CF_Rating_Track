@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      padding: 1vw 1vw;
+      margin: 10px 10px;
+      font-family: "Libre Baskerville", serif;
+      font-weight: 400;
+      font-style: normal;
+      background-color: rgb(31, 30, 30);
+      color: rgb(189, 181, 181);
+    }
+
+    table {
+      margin-top: 10px;
+      border: 5px
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid rgb(255, 255, 255);
+      padding-left: 10px;
+    }
+
+    .newbie {
+      color: black;
+      background-color: #808080;
+    }
+
+    .pupil {
+      color: white;
+      background-color: #008000;
+    }
+
+    .specialist {
+      color: black;
+      background-color: #03a89e;
+    }
+
+    .expert {
+      color: white;
+      background-color: #0000ff;
+    }
+
+    .candidate_master {
+      color: white;
+      background-color: #aa00aa;
+    }
+
+    .master {
+      color: white;
+      background-color: #ff8c29;
+    }
+
+    .imaster {
+      color: white;
+      background-color: #ff8c00;
+    }
+
+    .gm {
+      color: white;
+      background-color: #ff0000;
+    }
+
+    .igm {
+      color: white;
+      background-color: #ff0000;
+    }
+
+    .lgm {
+      color: white;
+      background-color: #ff0000;
+    }
+
+    button {
+      border-radius: 20px;
+      margin: 10px;
+      background-color: rgb(222, 222, 222);
+    }
+
+    input {
+      width: 400px;
+    }
+
+    input,
+    select {
+      padding-left: 10px;
+      border-radius: 20px;
+      background-color: rgb(222, 222, 222);
+    }
+
+    .white {
+      color: white;
+    }
+
+    .disclaimer {
+      font-size: 0.7em;
+      color: red;
+    }
+
+    img {
+      height: 4vw;
+    }
+  </style>
+  <title>CF ID tracker</title>
+</head>
+
+<body onload="getids(0)">
+  <form id="form" display="inline-block">
+    <input type="text" placeholder="cf_handles (if many, separate by  ' ; ' )" name="users">
+    <button>&nbsp;Insert More&nbsp;</button>
+  </form>
+  <!-- <button id="generate">Generate all</button> -->
+  <div>
+    <label for="batch">Select batch:&nbsp;</label>
+    <select name="batch" id="batch">
+      <option value="0">2023</option>
+      <option value="1">2024</option>
+    </select>
+  </div>
+  <div>
+    <label for="sort">Sort by:&nbsp;</label>
+    <select name="sort" id="sort">
+      <option value="0">None</option>
+      <option value="1">By Handle</option>
+      <option value="3">By Current Rating (Desc.)</option>
+      <option value="2">By Current Rating (Asc.)</option>
+      <option value="5">By Max Rating (Desc.)</option>
+      <option value="4">By Max Rating (Asc.)</option>
+    </select>
+    <button id="reset">&nbsp;Reset&nbsp;</button>
+  </div>
+  <!-- <p class="disclaimer">*Includes only 2023 Batch students</p> -->
+  <table id="mytable">
+    <thead>
+      <tr>
+        <th>&nbsp;S. No.&nbsp;</th>
+        <th>&nbsp;Avatar&nbsp;</th>
+        <th>&nbsp;Handle&nbsp;</th>
+        <th>&nbsp;First Name&nbsp;</th>
+        <th>&nbsp;Last Name&nbsp;</th>
+        <th>&nbsp;Current rating&nbsp;</th>
+        <th>&nbsp;Max rating&nbsp;</th>
+        <th>&nbsp;Rank&nbsp;</th>
+        <th>&nbsp;Max Rank&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody id="dataaa">
+    </tbody>
+  </table>
+  <!-- <script src="index.js"></script> -->
+  <script>
+    const body = document.querySelector('body');
+    const dataa = document.querySelector('#dataaa');
+    const form = document.querySelector('#form');
+    const reset = document.querySelector('#reset');
+    const gener = document.querySelector('#generate');
+    // const userids = ['t3nsor', 'Invincible745', 'Chaitanya..2', 'Gowthamkommana', 'tanayy0207', 'uv123', '619', 'shresthkasyap19', 'Candypaint_9', 'Parthsg', 'sprakash_x15', 'Artist06', 'ArkhamESHAN', 'Darkknight20', 'adityaaryan151', 'unhindered', 'Rakshit_1', 'ankesh_12', 'Megablaster505', 'siddharththecoder', 'staque', 'KRISHAN_2301CS25', 'mayank_manas', 'trump_Fan', 'tangerineArc', 'Ms.tripsy', 'Greninja1863', 'Clean_Code', 'DEV-endra', 'Slamix', 'EpsilonDelta03', 'tushargarg9905', 'Codershivam45', 'enum2', 'WalterWhite8', 'mihikas02;mihika1110', 'Atul55', 'Snipermonkey', 'arnavra3', 'Asterisk11', 'sridhanushsuru2006', 'Jelly.bean', 'Srichetan05', 'Himiitp', 'National-Vanilla7605', 'thonnwrit', 'Shreesh_125', 'Greninja08', 'Vansh223', 'JoyBoy_Nika', 'VIVEK6416', 'prestigious06', 'prateek_gpt', 'Enum2', 'Red345686', 'SHREYASINGHVLSI', 'ShefaliBishnoisb', 'Daydreams_2703', 'Krishna2005', 'C00LC0DER', 'JustMay', 'shubham0607agrawal', 'gunavardhan3', 'Abhijat_Jha', 'expertsiit', 'V_1995', 'bibhuti.bat', 'vegeta_29_19', 'kyataca', 'am15', 'Manshi332', 'Kr.omniscient', 'dhirendrathegreat', 'chef_gladiator', 'insane_insaan11', 'ashishraj_4404', 'explorer_skp', 'Xcepted_vxp32ncr', 'koushik_267', 'shiwani_shrivastava', 'the_nishant_kumar', 'sakshisaxena7121', 'pavitrprabhakar22', 'Manu_codeup', 'Abhinandan2005', 'rana_bharath', 'TheWiseKIng', 'KShitij_1211', 'abhay_25', 'Divyansh2006', 'abhin.07av', 'Hocus_Xenophilus', 'adityaonam', 'ishikag_2202', 'Abhinav_Sudini', 'Suppc', 'Ps.75', 'Utsav167', 'season1929', 'utk_', 'raushan1499'];
+    const sortt = document.querySelector('#sort');
+    const batch = document.querySelector('#batch');
+    let userids = [];
+    let res = [];
+    let temper = "";
+
+    const doreset = () => {
+      dataa.innerHTML = "";
+      // apijob();
+      generate(res);
+    }
+    sortt.addEventListener('change', (e) => {
+      const chosen = e.target.value;
+      if (chosen == 1) {
+        res.sort(function (a, b) {
+          return a.handle.localeCompare(b.handle);
+        });
+        doreset();
+        generate(res);
+      }
+      else if (chosen == 2) {
+        res.sort(function (a, b) {
+          return a.rating - b.rating;
+        });
+        doreset();
+        generate(res);
+      }
+      else if (chosen == 3) {
+        res.sort(function (a, b) {
+          return b.rating - a.rating;
+        });
+        doreset();
+        generate(res);
+      }
+      else if (chosen == 4) {
+        res.sort(function (a, b) {
+          return a.maxRating - b.maxRating;
+        });
+        doreset();
+        generate(res);
+      }
+      else if (chosen == 5) {
+        res.sort(function (a, b) {
+          return b.maxRating - a.maxRating;
+        });
+        doreset();
+        generate(res);
+      }
+    })
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const userid = form.elements.users.value;
+      temper = userid + ';' + temper;
+      apijob();
+    })
+
+    function generate(data) {
+      dataa.innerHTML = "";
+      for (let user of data) {
+        if (!user.rating) {
+          user.rating = 0;
+          user.maxRating = 0;
+        }
+      }
+      let i = 0;
+      for (let user of data) {
+        var row = dataa.insertRow(i);
+        var serial = row.insertCell(0);
+        var pfp = row.insertCell(1);
+        var handle = row.insertCell(2);
+        var first = row.insertCell(3);
+        var last = row.insertCell(4);
+        var rating = row.insertCell(5);
+        var maxrat = row.insertCell(6);
+        var rank = row.insertCell(7);
+        var maxrank = row.insertCell(8);
+        serial.innerHTML = ++i;
+        if (user.avatar) {
+          pfp.innerHTML = `<img src=${user.avatar}>`;
+        }
+        handle.innerHTML = `<a href=https://codeforces.com/profile/${user.handle} target="blank">${user.handle}</a>`;
+        handle.classList.add('white');
+        if (user.firstName) {
+          first.innerHTML = (user.firstName);
+        }
+        if (user.lastName) {
+          last.innerHTML = (user.lastName);
+        }
+        rating.innerHTML = (user.rating);
+        maxrat.innerHTML = (user.maxRating);
+        if (user.rating < 1199) rating.classList.add('newbie');
+        else if (user.rating >= 1200 && user.rating < 1399) rating.classList.add('pupil');
+        else if (user.rating >= 1400 && user.rating < 1599) rating.classList.add('specialist');
+        else if (user.rating >= 1600 && user.rating < 1899) rating.classList.add('expert');
+        else if (user.rating >= 1900 && user.rating < 2099) rating.classList.add('candidate_master');
+        else if (user.rating >= 2100 && user.rating < 2299) rating.classList.add('master');
+        else if (user.rating >= 2300 && user.rating < 2399) rating.classList.add('imaster');
+        else if (user.rating >= 2400 && user.rating < 2599) rating.classList.add('gm');
+        else if (user.rating >= 2600 && user.rating < 2999) rating.classList.add('igm');
+        else if (user.rating >= 3000) rating.classList.add('lgm');
+        if (user.maxRating < 1199) maxrat.classList.add('newbie');
+        else if (user.maxRating >= 1200 && user.maxRating < 1399) maxrat.classList.add('pupil');
+        else if (user.maxRating >= 1400 && user.maxRating < 1599) maxrat.classList.add('specialist');
+        else if (user.maxRating >= 1600 && user.maxRating < 1899) maxrat.classList.add('expert');
+        else if (user.maxRating >= 1900 && user.maxRating < 2099) maxrat.classList.add('candidate_master');
+        else if (user.maxRating >= 2100 && user.maxRating < 2299) maxrat.classList.add('master');
+        else if (user.maxRating >= 2300 && user.maxRating < 2399) maxrat.classList.add('imaster');
+        else if (user.maxRating >= 2400 && user.maxRating < 2599) maxrat.classList.add('gm');
+        else if (user.maxRating >= 2600 && user.maxRating < 2999) maxrat.classList.add('igm');
+        else if (user.maxRating >= 3000) maxrat.classList.add('lgm');
+        rank.innerHTML = (user.rank);
+        maxrank.innerHTML = (user.maxRank);
+      }
+      form.elements.users.value = "";
+    }
+    reset.addEventListener('click', () => {
+      temper = userids[0].handle;
+      for (let i = 1; i < userids.length; i++) {
+        temper = temper + ';' + userids[i].handle;
+      }
+      apijob();
+      doreset();
+    });
+    batch.addEventListener('change', ()=>{
+      console.log(batch.value);
+      getids(batch.value);
+    })
+    async function getids() {
+      dataa.innerHTML = "";
+      let type = batch.value;
+      const url = ['https://script.google.com/macros/s/AKfycbyvpkpI1Wse-a_fUh_v2mfBTBw98dMCesWjpFgtVb5YR34rybYv3-qF0w0YRHa-gFSQ/exec',
+        'https://script.google.com/macros/s/AKfycbzbxRprD7kOHjYTYZtJcEjASjtZTc6RkhIdkyNnO5TnDCcVpaSV-Jd0ZUiCvl5j9Gmb/exec']
+      fetch(url[type])
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          userids = data.data;
+          temper = userids[0].handle;
+          for (let i = 1; i < userids.length; i++) {
+            temper = temper + ';' + userids[i].handle;
+          }
+          apijob();
+          // console.log(data.data);
+        })
+        .catch(error => {
+          console.error(error);
+        })
+    }
+    async function apijob() {
+      const apiUrl = (`https://codeforces.com/api/user.info?handles=${temper}&checkHistoricHandles=false`);
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          res = data.result;
+          generate(res);
+        })
+        .catch(error => {
+          // form.elements.users.value = "";
+          alert('Invalid User ID.');
+          const semi = temper.indexOf(';');
+          temper = temper.slice(semi + 1,);
+          console.error('Error:', error);
+        });
+    };
+  </script>
+</body>
+
+</html>
