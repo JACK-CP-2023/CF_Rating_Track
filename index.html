@@ -161,6 +161,15 @@
       </tr>
     </thead>
     <tbody id="dataaa">
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
+      <th>&nbsp;<i>!!Loading</i>&nbsp;</th>
     </tbody>
   </table>
   <!-- <script src="index.js"></script> -->
@@ -249,7 +258,7 @@
         var maxrank = row.insertCell(8);
         serial.innerHTML = ++i;
         if (user.avatar) {
-          pfp.innerHTML = `<img src=${user.avatar}>`;
+          pfp.innerHTML = `<img src=${user.titlePhoto}>`;
         }
         handle.innerHTML = `<a href=https://codeforces.com/profile/${user.handle} target="blank">${user.handle}</a>`;
         handle.classList.add('white');
@@ -262,24 +271,24 @@
         rating.innerHTML = (user.rating);
         maxrat.innerHTML = (user.maxRating);
         if (user.rating < 1199) rating.classList.add('newbie');
-        else if (user.rating >= 1200 && user.rating < 1399) rating.classList.add('pupil');
-        else if (user.rating >= 1400 && user.rating < 1599) rating.classList.add('specialist');
-        else if (user.rating >= 1600 && user.rating < 1899) rating.classList.add('expert');
-        else if (user.rating >= 1900 && user.rating < 2099) rating.classList.add('candidate_master');
-        else if (user.rating >= 2100 && user.rating < 2299) rating.classList.add('master');
-        else if (user.rating >= 2300 && user.rating < 2399) rating.classList.add('imaster');
-        else if (user.rating >= 2400 && user.rating < 2599) rating.classList.add('gm');
-        else if (user.rating >= 2600 && user.rating < 2999) rating.classList.add('igm');
+        else if (user.rating >= 1200 && user.rating < 1400) rating.classList.add('pupil');
+        else if (user.rating >= 1400 && user.rating < 1600) rating.classList.add('specialist');
+        else if (user.rating >= 1600 && user.rating < 1800) rating.classList.add('expert');
+        else if (user.rating >= 1900 && user.rating < 2100) rating.classList.add('candidate_master');
+        else if (user.rating >= 2100 && user.rating < 2300) rating.classList.add('master');
+        else if (user.rating >= 2300 && user.rating < 2400) rating.classList.add('imaster');
+        else if (user.rating >= 2400 && user.rating < 2600) rating.classList.add('gm');
+        else if (user.rating >= 2600 && user.rating < 3000) rating.classList.add('igm');
         else if (user.rating >= 3000) rating.classList.add('lgm');
         if (user.maxRating < 1199) maxrat.classList.add('newbie');
-        else if (user.maxRating >= 1200 && user.maxRating < 1399) maxrat.classList.add('pupil');
-        else if (user.maxRating >= 1400 && user.maxRating < 1599) maxrat.classList.add('specialist');
-        else if (user.maxRating >= 1600 && user.maxRating < 1899) maxrat.classList.add('expert');
-        else if (user.maxRating >= 1900 && user.maxRating < 2099) maxrat.classList.add('candidate_master');
-        else if (user.maxRating >= 2100 && user.maxRating < 2299) maxrat.classList.add('master');
-        else if (user.maxRating >= 2300 && user.maxRating < 2399) maxrat.classList.add('imaster');
-        else if (user.maxRating >= 2400 && user.maxRating < 2599) maxrat.classList.add('gm');
-        else if (user.maxRating >= 2600 && user.maxRating < 2999) maxrat.classList.add('igm');
+        else if (user.maxRating >= 1200 && user.maxRating < 1400) maxrat.classList.add('pupil');
+        else if (user.maxRating >= 1400 && user.maxRating < 1600) maxrat.classList.add('specialist');
+        else if (user.maxRating >= 1600 && user.maxRating < 1800) maxrat.classList.add('expert');
+        else if (user.maxRating >= 1900 && user.maxRating < 2100) maxrat.classList.add('candidate_master');
+        else if (user.maxRating >= 2100 && user.maxRating < 2300) maxrat.classList.add('master');
+        else if (user.maxRating >= 2300 && user.maxRating < 2400) maxrat.classList.add('imaster');
+        else if (user.maxRating >= 2400 && user.maxRating < 2600) maxrat.classList.add('gm');
+        else if (user.maxRating >= 2600 && user.maxRating < 3000) maxrat.classList.add('igm');
         else if (user.maxRating >= 3000) maxrat.classList.add('lgm');
         rank.innerHTML = (user.rank);
         maxrank.innerHTML = (user.maxRank);
@@ -294,12 +303,31 @@
       apijob();
       doreset();
     });
-    batch.addEventListener('change', ()=>{
-      console.log(batch.value);
+    batch.addEventListener('change', () => {
+      // console.log(batch.value);
+      dataa.innerHTML = "";
+      var row = dataa.insertRow(0);
+      var serial = row.insertCell(0);
+      var pfp = row.insertCell(1);
+      var handle = row.insertCell(2);
+      var first = row.insertCell(3);
+      var last = row.insertCell(4);
+      var rating = row.insertCell(5);
+      var maxrat = row.insertCell(6);
+      var rank = row.insertCell(7);
+      var maxrank = row.insertCell(8);
+      serial.innerHTML = '<i>!!Loading</i>';
+      pfp.innerHTML = '<i>!!Loading</i>';
+      handle.innerHTML = '<i>!!Loading</i>';
+      first.innerHTML = '<i>!!Loading</i>';
+      last.innerHTML = '<i>!!Loading</i>';
+      rating.innerHTML = '<i>!!Loading</i>';
+      maxrat.innerHTML = '<i>!!Loading</i>';
+      rank.innerHTML = '<i>!!Loading</i>';
+      maxrank.innerHTML = '<i>!!Loading</i>';
       getids(batch.value);
     })
     async function getids() {
-      dataa.innerHTML = "";
       let type = batch.value;
       const url = ['https://script.google.com/macros/s/AKfycbyvpkpI1Wse-a_fUh_v2mfBTBw98dMCesWjpFgtVb5YR34rybYv3-qF0w0YRHa-gFSQ/exec',
         'https://script.google.com/macros/s/AKfycbzbxRprD7kOHjYTYZtJcEjASjtZTc6RkhIdkyNnO5TnDCcVpaSV-Jd0ZUiCvl5j9Gmb/exec']
